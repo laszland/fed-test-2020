@@ -1,0 +1,59 @@
+html {
+  box-sizing: inherit;
+}
+*,
+*:before,
+*:after {
+  box-sizing: inherit;
+}
+body {
+  font-family: 'Ubuntu', sans-serif;
+  font-weight: normal;
+  padding: 2.4%;
+}
+.header{
+  background-color: black;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  padding: 0%;
+  margin: 0%;
+  font-weight: lighter;
+}
+.header > p {
+  color: white;
+}
+.navbar{
+  display: flex;
+  padding: 0;
+}
+.wrapper {
+  display: grid;
+  gap: 1em;
+  grid-template-columns: repeat(4, 1fr);
+  grid-template-rows: auto;
+}
+article {
+  display: flex;
+  flex-flow: column wrap;
+  grid-column: span 2;
+  grid-row: 1fr;
+  /*background-color: burlywood; */
+}
+article > img {
+  border-bottom: gray solid 1px;
+  width: 100%;
+  height: auto;
+}
+article > p {
+  font-size: auto;
+}
+.prices {
+  display: flex;
+  flex-flow: row wrap;
+}
+.crossed {
+  text-decoration: line-through;
+  font-weight: lighter;
+  margin-right: 1em;
+}
