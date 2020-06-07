@@ -26,6 +26,26 @@ body {
 .navbar{
   display: flex;
   padding: 0;
+  border-bottom: gray solid 1px;
+  align-items: center;
+  justify-content: space-between;
+}
+.navbar > div > img {
+  width: 34px;
+  height: 34px;
+  margin-right: 10px;
+}
+.navbar > div {
+  display: flex;
+  align-items: center;
+}
+.best-sellers {
+  display: flex;
+  justify-content: center;
+  align-items: center;
+}
+.best-sellers > p {
+  font-weight: lighter;
 }
 .wrapper {
   display: grid;
@@ -38,22 +58,40 @@ article {
   flex-flow: column wrap;
   grid-column: span 2;
   grid-row: 1fr;
-  /*background-color: burlywood; */
 }
 article > img {
   border-bottom: gray solid 1px;
   width: 100%;
   height: auto;
 }
-article > p {
-  font-size: auto;
+article .title {
+  font-size: smaller;
+  font-weight: lighter;
 }
 .prices {
   display: flex;
   flex-flow: row wrap;
+  padding: 0 0;
+}
+.prices > p {
+  font-size: small;
+}
+.prices > p + p {
+  font-weight: bolder;
 }
 .crossed {
   text-decoration: line-through;
   font-weight: lighter;
   margin-right: 1em;
 }
+
+/* on medium and large devices */
+@media (min-width: 550px) {
+  article {
+    display: flex;
+    flex-flow: column wrap;
+    grid-column: span 1;
+    grid-row: 1fr;
+  }
+}
+
