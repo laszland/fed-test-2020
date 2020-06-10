@@ -4,12 +4,12 @@ html {
 *,
 *:before,
 *:after {
-  box-sizing: inherit;
+  /* box-sizing: inherit; */
+  list-style: none;
 }
 body {
   font-family: 'Ubuntu', sans-serif;
   font-weight: normal;
-  padding: 2.4%;
 }
 .header{
   background-color: black;
@@ -25,19 +25,23 @@ body {
 }
 .navbar{
   display: flex;
-  padding: 0;
+  padding: 0 2.4%;
   border-bottom: gray solid 1px;
   align-items: center;
   justify-content: space-between;
 }
-.navbar > div > img {
-  width: 34px;
-  height: 34px;
-  margin-right: 10px;
-}
 .navbar > div {
   display: flex;
   align-items: center;
+}
+.navbar > div > img {
+  width: 30px;
+  height: 30px;
+  margin-right: 10px;
+}
+.navbar > div > p {
+  font-size: smaller;
+  font-weight: lighter;
 }
 .best-sellers {
   display: flex;
@@ -46,7 +50,105 @@ body {
 }
 .best-sellers > p {
   font-weight: lighter;
+  margin-bottom: 0;
 }
+.filters {
+  position: relative;
+  display: flex;
+  flex-flow: row wrap;
+  justify-content: center;
+  align-items: center;
+  margin-bottom: 12px;
+  z-index: 20;
+}
+.filters > p {
+  flex-basis: 100%;
+  color: #424242;
+  font-size: smaller;
+  font-weight: lighter;
+}
+.filters > div {
+  flex-basis: 50%;
+}
+.filters ul {
+  padding: 0;
+  margin: 0;
+}
+.filters .sort ul {
+  margin-right: 12px;
+}
+.default div {
+  display: flex;
+  flex-flow: row;
+  justify-content: left;
+  align-items: center;
+  background-color: #e3e3e3;
+  padding: 5px 10px;
+  border: #d3d3d3 solid 1px;
+  border-radius: 0px;
+  cursor: pointer;
+}
+.default div:hover {
+  border-color: #d7bd8e;
+}
+.default div > i {
+  margin-right: 5px;
+  width: 16px;
+}
+.default p {
+  font-weight: lighter;
+  font-size: smaller;
+  margin: 0px;
+}
+.select {
+  padding: 0px;
+  background-color: #e3e3e3;
+  z-index: 99;
+}
+.select li {
+  display: none;
+}
+.select.active li {
+  display: block;
+}
+.select div {
+  cursor: pointer;
+  display: flex;
+  justify-content: center;
+  align-items: left;
+  background-color: #e3e3e3;
+  border: #e3e3e3 solid 1px;
+  justify-content: left;
+  align-items: center;
+}
+.select div:hover {
+  border-color: #d7bd8e;
+  background-color: #9ed0e3;
+}
+.select p {
+  font-weight: lighter;
+  font-size: smaller;
+  margin: 5px 10px 5px 31px;
+}
+/* select {
+  flex-basis: 42%;
+  background-color: #e3e3e3;
+  border: #d3d3d3 solid 1px;
+  border-radius: 0px;
+  padding: 8px 10px;
+  appearance: none;
+  -webkit-appearance: none;
+  -moz-appearance: none;
+  cursor: pointer;
+}
+select:focus,
+select:hover {
+  outline: none;
+  border-color: #d7bd8e;
+}
+option {
+
+} */
 .wrapper {
   display: grid;
   gap: 1em;
@@ -87,6 +189,13 @@ article .title {
 
 /* on medium and large devices */
 @media (min-width: 550px) {
+  .filter {
+    justify-content: left;
+  }
+  select {
+    max-width: 154px;
+    margin-right: 2.5%;
+  }
   article {
     display: flex;
     flex-flow: column wrap;
