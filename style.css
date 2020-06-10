@@ -105,6 +105,9 @@ body {
   background-color: #e3e3e3;
   z-index: 99;
 }
+.select.active {
+  border: #d7bd8e solid 1px;
+}
 .select li {
   display: none;
 }
@@ -122,7 +125,6 @@ body {
   align-items: center;
 }
 .select div:hover {
-  border-color: #d7bd8e;
   background-color: #9ed0e3;
 }
 .select p {
