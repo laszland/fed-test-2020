@@ -20,6 +20,7 @@ $(document).ready(function(){
   })
 
   let products;
+  let productCounter = 0;
 
   $.ajax("https://d2t3o0osqtjkex.cloudfront.net/tgTest/prods.json", {
     type: "GET",
@@ -40,7 +41,9 @@ $(document).ready(function(){
           </div>
         </article>
         `)
+        productCounter++;
       });
+      $(".filters > p").html(productCounter + ' Results')
     },
     error: function(req, err, status) {
       console.error("Something went wrong! Status: %s (%s)", status, err)
