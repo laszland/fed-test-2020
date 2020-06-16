@@ -152,11 +152,13 @@ article > img {
   border-bottom: gray solid 1px;
   width: 100%;
   height: auto;
+  cursor: pointer;
 }
 article .title {
   margin: 10px 0 0 0;
   font-size: smaller;
   font-weight: lighter;
+  cursor: pointer;
 }
 .prices {
   display: flex;
@@ -175,6 +177,51 @@ article .title {
   text-decoration: line-through;
   font-weight: lighter;
   margin-right: 1em;
+}
+.pop-up{
+  width: 70%;
+  height: auto;
+  position: absolute;
+  background-color: white;
+  left: 0;
+  right: 0;
+  margin-left: auto;
+  margin-right: auto;
+  margin-bottom: 10px;
+  padding: 10px;
+  display: none;
+}
+.pop-up i {
+  flex-basis: 100%;
+  padding-left: 90%;
+  cursor: pointer;
+}
+.pop-up > #button {
+  background-color: black;
+  color: white;
+  margin-right: auto;
+  margin-left: auto;
+  margin-top: 20px;
+  margin-bottom: 20px;
+  font-weight: lighter;
+  font-size: smaller;
+  padding: 5px 10px;
+}
+.pop-up > .title {
+  font-weight: bolder;
+}
+.description{
+  font-size: small;
+  font-weight: lighter;
+  line-height: 1.5;
+}
+.visible {
+  display: flex;
+  flex-flow: row wrap;
+}
+.disabled {
+  background-color: black;
+  opacity: 0.5;
 }
 
 /* on medium and large devices */
