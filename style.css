@@ -4,7 +4,7 @@ html {
 *,
 *:before,
 *:after {
-  /* box-sizing: inherit; */
+  box-sizing: inherit;
   list-style: none;
 }
 body {
@@ -53,13 +53,11 @@ body {
   margin-bottom: 0;
 }
 .filters {
-  position: relative;
   display: flex;
   flex-flow: row wrap;
   justify-content: center;
   align-items: center;
   margin-bottom: 12px;
-  z-index: 20;
 }
 .filters > p {
   flex-basis: 100%;
@@ -68,6 +66,7 @@ body {
   font-weight: lighter;
 }
 .filters > div {
+  position: relative;
   flex-basis: 50%;
   max-width: 200px;
 }
@@ -102,6 +101,10 @@ body {
   margin: 0px;
 }
 .select {
+  position: absolute;
+  top: 28px;
+  left: 0;
+  right: 0;
   padding: 0px;
   background-color: #e3e3e3;
   z-index: 99;
@@ -134,16 +137,16 @@ body {
   margin: 5px 10px 5px 31px;
 }
 .wrapper {
-  display: flex;
-  flex-flow: row wrap;
-  gap: 5%;
-  justify-content: space-evenly;
-  align-items: center;
+  display: grid;
+  gap: 1em;
+  grid-template-columns: repeat(4, 1fr);
+  grid-template-rows: auto;
 }
 article {
   display: flex;
   flex-flow: column wrap;
-  flex-basis: 47.5%;
+  grid-column: span 2;
+  grid-row: 1fr;
 }
 article > img {
   border-bottom: gray solid 1px;
@@ -188,7 +191,8 @@ article .title {
   article {
     display: flex;
     flex-flow: column wrap;
-    flex-basis: 21.25%;
+    grid-column: span 1;
+    grid-row: 1fr;
   }
 }
 
