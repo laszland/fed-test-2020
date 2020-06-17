@@ -23,6 +23,7 @@ body {
 }
 .header > p {
   color: white;
+  text-transform: uppercase;
 }
 .navbar{
   display: flex;
@@ -43,6 +44,7 @@ body {
 .navbar > div > p {
   font-size: smaller;
   font-weight: lighter;
+  text-transform: capitalize;
 }
 .best-sellers {
   display: flex;
@@ -99,6 +101,7 @@ body {
 .default p {
   font-weight: lighter;
   font-size: smaller;
+  text-transform: uppercase;
   margin: 0px;
 }
 .select {
