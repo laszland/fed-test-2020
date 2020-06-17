@@ -1,90 +1,91 @@
-$(document).ready(function(){
-  let products;
+let products = [];
+const url = new URL(window.location.href);
+
+async function fetchProducts () {
+  const data = await $.ajax('https://d2t3o0osqtjkex.cloudfront.net/tgTest/prods.json');
+  return data;
+}
+
+function renderProducts (products) {
   let productCounter = 0;
-  let url = new URL(window.location.href);
+  $('.wrapper').empty();
+  products.map(item => {
+    const wrapper = $('.wrapper');
+    wrapper.append(`
+      <article>
+        <img src=${item.image_link_mb} alt=${item.title} class="photo">
+        <div>
+          <p class="title">${item.title}</p>
+        </div>
+        <div class="prices">
+          <p class="crossed">$${item.crossed_price}</p>
+          <p>$${item.price}</p>
+        </div>
+      </article>
+    `);
+    productCounter++;
+  });
+  $('.filters > p').html(productCounter + ' Results');
+}
 
-  $(".sort .default").click(function(){
-    $(".sort .select").toggleClass("active");
-  })
+function filterProducts (products, filter) {
+  return products.filter(product => product.title.toUpperCase().includes(filter));
+}
 
-  $(".filter .default").click(function(){
-    $(".filter .select").toggleClass("active");
-  })
+function handleFilter () {
+  const filter = url.searchParams.get('filter') ? url.searchParams.get('filter').toUpperCase() : '';
+  const sort = url.searchParams.get('sort') ? url.searchParams.get('sort') : 'asc';
+  const filteredProducts = filterProducts(products, filter).sort(compare(sort));
+  renderProducts(filteredProducts);
+}
 
-  $(".sort .select li").click(function(){
-    let current = $(this).html();
-    let order = $(this).children().attr("key");
+async function initProducts () {
+  products = await fetchProducts();
+  handleFilter();
+}
+
+function compare (order) {
+  return function innerSort (a, b) {
+    let comparision = 0;
+    if (a.price > b.price) {
+      comparision = 1;
+    } else if (a.price < b.price) {
+      comparision = -1;
+    }
+    return (
+      (order === 'desc') ? (comparision * -1) : comparision
+    );
+  };
+}
+
+$(document).ready(function () {
+  initProducts();
+
+  $('.sort .default').click(function () {
+    $('.sort .select').toggleClass('active');
+  });
+
+  $('.filter .default').click(function () {
+    $('.filter .select').toggleClass('active');
+  });
+
+  $('.sort .select li').click(function () {
+    const current = $(this).html();
+    const order = $(this).children().attr('key');
     url.searchParams.set('sort', order);
-    window.location = url.href;
-    $(".sort .default li").html(current);
-    $(".sort .select").removeClass("active");
-  })
+    window.history.replaceState(null, null, url.href);
+    handleFilter();
+    $('.sort .default li').html(current);
+    $('.sort .select').removeClass('active');
+  });
 
-  $(".filter .select li").click(function(){
+  $('.filter .select li').click(function () {
     var current = $(this).html();
-    let filter = $(this).children().attr("key");
+    const filter = $(this).children().attr('key');
     url.searchParams.set('filter', filter);
-    window.location = url.href;
-    $(".filter .default li").html(current);
-    $(".filter .select").removeClass("active");
-  })
-
-  function compare(order = 'asc') {
-    return function innerSort(a, b) {
-      let comparision = 0;
-      if (a.price > b.price) {
-        comparision = 1;
-      } else if (a.price < b.price) {
-        comparision = -1;
-      }
-      return (
-        (order === 'desc') ? (comparision * -1) : comparision
-      );
-    }
-  }
-
-  $.ajax("https://d2t3o0osqtjkex.cloudfront.net/tgTest/prods.json", {
-    type: "GET",
-    dataType: "json",
-    success: function(data) {
-      products = data.sort(compare(url.searchParams.get('sort')));
-      products.map(item => {
-        let wrapper = $(".wrapper");
-        let filter = url.searchParams.get('filter') ? url.searchParams.get('filter').toUpperCase() : "";
-        if (item.title.toUpperCase().includes(filter)) {
-          wrapper.append(`
-          <article>
-            <img src=${item.image_link_mb} alt=${item.title} class="photo">
-            <div>
-              <p class="title">${item.title}</p>
-            </div>
-            <div class="prices">
-              <p class="crossed">$${item.crossed_price}</p>
-              <p>$${item.price}</p>
-            </div>
-            <div class="pop-up">
-              <i class="fas fa-times"></i>
-              <p class="title">${item.title}</p>
-              <p class="description">${item.description}</p>
-              <div id="button">BUY NOW</div>
-            </div>
-          </article>
-          `)
-          productCounter++;
-          $("article").click(function(){
-            let popUp = $(this).children('.pop-up');
-            popUp.addClass('visible');
-
-          })
-        }
-      });
-      $(".filters > p").html(productCounter + ' Results')
-    },
-    error: function(req, err, status) {
-      console.error("Something went wrong! Status: %s (%s)", status, err)
-    }
-  })
-  $(document).on("click", ".pop-up i", function(){
-    $(".visible").removeClass("visible");
-  })
-})
+    window.history.replaceState(null, null, url.href);
+    handleFilter();
+    $('.filter .default li').html(current);
+    $('.filter .select').removeClass('active');
+  });
+});
