@@ -17,8 +17,8 @@ body {
   display: flex;
   justify-content: center;
   align-items: center;
-  padding: 0%;
-  margin: 0%;
+  padding: 0;
+  margin: 0;
   font-weight: lighter;
 }
 .header > p {
@@ -27,8 +27,8 @@ body {
 }
 .navbar{
   display: flex;
-  padding: 0 2.4%;
-  border-bottom: gray solid 1px;
+  margin: 0 2.4%;
+  border-bottom: #e6e6e6 solid 1px;
   align-items: center;
   justify-content: space-between;
 }
@@ -60,6 +60,7 @@ body {
   flex-flow: row wrap;
   justify-content: center;
   align-items: center;
+  margin: 0 2.4%;
   margin-bottom: 12px;
 }
 .filters > p {
@@ -145,6 +146,7 @@ body {
   gap: 1em;
   grid-template-columns: repeat(4, 1fr);
   grid-template-rows: auto;
+  margin: 0 2.4%;
 }
 article {
   display: flex;
@@ -164,6 +166,9 @@ article .title {
   font-weight: lighter;
   cursor: pointer;
 }
+article .hidden-desc{
+  display: none;
+}
 .prices {
   display: flex;
   flex-flow: row wrap;
@@ -182,7 +187,16 @@ article .title {
   font-weight: lighter;
   margin-right: 1em;
 }
-.pop-up{
+.pop-up {
+  position: absolute;
+  top: 0;
+  width: 100vw;
+  height: 100vh;
+  background-color: rgba(0, 0, 0, 0.6);
+  display: none;
+  z-index: 20;
+}
+.pop-up > div {
   width: 70%;
   height: auto;
   position: absolute;
@@ -193,14 +207,15 @@ article .title {
   margin-right: auto;
   margin-bottom: 10px;
   padding: 10px;
-  display: none;
+  display: flex;
+  flex-flow: row wrap;
 }
-.pop-up i {
+.pop-up > div > i {
   flex-basis: 100%;
   padding-left: 90%;
   cursor: pointer;
 }
-.pop-up > #button {
+.pop-up > div > #button {
   background-color: black;
   color: white;
   margin-right: auto;
@@ -211,21 +226,17 @@ article .title {
   font-size: smaller;
   padding: 5px 10px;
 }
-.pop-up > .title {
+.pop-up > div > #title {
   font-weight: bolder;
 }
-.description{
+.pop-up > div > #description{
   font-size: small;
   font-weight: lighter;
   line-height: 1.5;
 }
 .visible {
   display: flex;
-  flex-flow: row wrap;
-}
-.disabled {
-  background-color: black;
-  opacity: 0.5;
+  align-items: center;
 }
 
 /* on medium and large devices */

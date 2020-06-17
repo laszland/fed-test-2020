@@ -16,6 +16,7 @@ function renderProducts (products) {
         <img src=${item.image_link_mb} alt=${item.title} class="photo">
         <div>
           <p class="title">${item.title}</p>
+          <p class="hidden-desc">${item.description}</p>
         </div>
         <div class="prices">
           <p class="crossed">$${item.crossed_price}</p>
@@ -87,5 +88,19 @@ $(document).ready(function () {
     handleFilter();
     $('.filter .default li').html(current);
     $('.filter .select').removeClass('active');
+  });
+
+  $(document).on('click', 'article > img', function (event) {
+    const target = $(event.target).parent();
+    const title = target.find('div > .title').html();
+    const description = target.find('div > .hidden-desc').html();
+    console.log(description);
+    $('.pop-up').addClass('visible');
+    $('#title').html(title);
+    $('#description').html(description);
+  });
+
+  $(document).on('click', '.pop-up > div > i', function () {
+    $('.visible').removeClass('visible');
   });
 });
