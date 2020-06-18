@@ -1,9 +1,6 @@
 let products = [];
 const url = new URL(window.location.href);
-
-async function fetchProducts () {
-  return await $.ajax('https://d2t3o0osqtjkex.cloudfront.net/tgTest/prods.json');
-}
+const $ = window.$;
 
 function renderProducts (products) {
   let productCounter = 0;
@@ -11,11 +8,10 @@ function renderProducts (products) {
   products.map(item => {
     const wrapper = $('.wrapper');
     wrapper.append(`
-      <article>
+      <article id=${item.id}>
         <img src=${item.image_link_mb} alt=${item.title} class="photo">
         <div>
           <p class="title">${item.title}</p>
-          <p class="hidden-desc">${item.description}</p>
         </div>
         <div class="prices">
           <p class="crossed">$${item.crossed_price}</p>
@@ -40,8 +36,22 @@ function handleFilter () {
 }
 
 async function initProducts () {
-  products = await fetchProducts();
+  products = await $.ajax('https://d2t3o0osqtjkex.cloudfront.net/tgTest/prods.json');
   handleFilter();
+}
+
+function initFilters () {
+  const sort = url.searchParams.get('sort');
+  const filter = url.searchParams.get('filter');
+  console.log(sort, filter);
+  if (sort) {
+    const selected = $(`[key=${sort}]`).parent().html();
+    $('.sort .default li').html(selected);
+  }
+  if (filter) {
+    const selected = $(`[key=${filter}]`).parent().html();
+    $('.filter .default li').html(selected);
+  }
 }
 
 function compare (order) {
@@ -60,6 +70,13 @@ function compare (order) {
 
 $(document).ready(function () {
   initProducts();
+  initFilters();
+
+  $('.toggleDisplay p').click(function () {
+    $('article').toggleClass('oneItem');
+    const buttonText = $('article').hasClass('oneItem') ? 'Two item in a row' : 'One item in a row';
+    $(this).html(buttonText);
+  });
 
   $('.sort .default').click(function () {
     $('.sort .select').toggleClass('active');
@@ -90,15 +107,22 @@ $(document).ready(function () {
   });
 
   $(document).on('click', 'article > img', function (event) {
-    const target = $(event.target).parent();
-    const title = target.find('div > .title').html();
-    const description = target.find('div > .hidden-desc').html();
-    const height = $(document).height();
-    const yCoordinate = event.pageY - 100;
+    const targetID = $(event.target).parent().attr('id');
+    let target = {};
+    products.map(product => {
+      if (product.id === targetID) {
+        target = product;
+      }
+    });
+    const height = `${$(document).height()}`;
+    const pixelFromTop = `${event.pageY - 150}`;
     $('.pop-up').addClass('visible').css('height', height + 'px');
-    $('.pop-up > div').css('top', yCoordinate + 'px');
-    $('#title').html(title);
-    $('#description').html(description);
+    $('.pop-up > div').css('top', pixelFromTop + 'px');
+    $('#title').html(target.title);
+    $('#description').html(target.description);
+    $('#button').click(function () {
+      window.open(target.link, '_newtab');
+    });
   });
 
   $(document).on('click', '.pop-up > div > i', function () {
