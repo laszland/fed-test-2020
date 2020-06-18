@@ -2,8 +2,7 @@ let products = [];
 const url = new URL(window.location.href);
 
 async function fetchProducts () {
-  const data = await $.ajax('https://d2t3o0osqtjkex.cloudfront.net/tgTest/prods.json');
-  return data;
+  return await $.ajax('https://d2t3o0osqtjkex.cloudfront.net/tgTest/prods.json');
 }
 
 function renderProducts (products) {
@@ -94,8 +93,10 @@ $(document).ready(function () {
     const target = $(event.target).parent();
     const title = target.find('div > .title').html();
     const description = target.find('div > .hidden-desc').html();
-    console.log(description);
-    $('.pop-up').addClass('visible');
+    const height = $(document).height();
+    const yCoordinate = event.pageY - 100;
+    $('.pop-up').addClass('visible').css('height', height + 'px');
+    $('.pop-up > div').css('top', yCoordinate + 'px');
     $('#title').html(title);
     $('#description').html(description);
   });
