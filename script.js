@@ -3,7 +3,7 @@ const url = new URL(window.location.href);
 const $ = window.$;
 
 function renderProducts (products) {
-  let productCounter = 0;
+  const productCounter = products.length;
   $('.wrapper').empty();
   products.map(item => {
     const wrapper = $('.wrapper');
@@ -19,7 +19,6 @@ function renderProducts (products) {
         </div>
       </article>
     `);
-    productCounter++;
   });
   $('.filters > p').html(productCounter + ' Results');
 }
@@ -43,7 +42,6 @@ async function initProducts () {
 function initFilters () {
   const sort = url.searchParams.get('sort');
   const filter = url.searchParams.get('filter');
-  console.log(sort, filter);
   if (sort) {
     const selected = $(`[key=${sort}]`).parent().html();
     $('.sort .default li').html(selected);
@@ -68,14 +66,44 @@ function compare (order) {
   };
 }
 
+function toggleDisplay () {
+  $('article').toggleClass('oneItem');
+  const buttonText = $('article').hasClass('oneItem') ? 'Two item in a row' : 'One item in a row';
+  $(this).html(buttonText);
+}
+
+function handleSelectDropDown (filter, value, current) {
+  url.searchParams.set(filter, value);
+  window.history.replaceState(null, null, url.href);
+  handleFilter();
+  $(`.${filter} .default li`).html(current);
+  $(`.${filter} .select`).removeClass('active');
+}
+
+function handleSelectProduct (productID, event) {
+  let selectedProduct = {};
+  products.map(product => {
+    if (product.id === productID) {
+      selectedProduct = product;
+    }
+  });
+  const height = `${$(document).height()}`;
+  const pixelFromTop = `${event.pageY - 150}`;
+  $('.pop-up').addClass('visible').css('height', height + 'px');
+  $('.pop-up > div').css('top', pixelFromTop + 'px');
+  $('#title').html(selectedProduct.title);
+  $('#description').html(selectedProduct.description);
+  $('#button').click(function () {
+    window.open(selectedProduct.link, '_newtab');
+  });
+}
+
 $(document).ready(function () {
   initProducts();
   initFilters();
 
   $('.toggleDisplay p').click(function () {
-    $('article').toggleClass('oneItem');
-    const buttonText = $('article').hasClass('oneItem') ? 'Two item in a row' : 'One item in a row';
-    $(this).html(buttonText);
+    toggleDisplay();
   });
 
   $('.sort .default').click(function () {
@@ -89,40 +117,18 @@ $(document).ready(function () {
   $('.sort .select li').click(function () {
     const current = $(this).html();
     const order = $(this).children().attr('key');
-    url.searchParams.set('sort', order);
-    window.history.replaceState(null, null, url.href);
-    handleFilter();
-    $('.sort .default li').html(current);
-    $('.sort .select').removeClass('active');
+    handleSelectDropDown('sort', order, current);
   });
 
   $('.filter .select li').click(function () {
     var current = $(this).html();
     const filter = $(this).children().attr('key');
-    url.searchParams.set('filter', filter);
-    window.history.replaceState(null, null, url.href);
-    handleFilter();
-    $('.filter .default li').html(current);
-    $('.filter .select').removeClass('active');
+    handleSelectDropDown('filter', filter, current);
   });
 
   $(document).on('click', 'article > img', function (event) {
     const targetID = $(event.target).parent().attr('id');
-    let target = {};
-    products.map(product => {
-      if (product.id === targetID) {
-        target = product;
-      }
-    });
-    const height = `${$(document).height()}`;
-    const pixelFromTop = `${event.pageY - 150}`;
-    $('.pop-up').addClass('visible').css('height', height + 'px');
-    $('.pop-up > div').css('top', pixelFromTop + 'px');
-    $('#title').html(target.title);
-    $('#description').html(target.description);
-    $('#button').click(function () {
-      window.open(target.link, '_newtab');
-    });
+    handleSelectProduct(targetID, event);
   });
 
   $(document).on('click', '.pop-up > div > i', function () {
