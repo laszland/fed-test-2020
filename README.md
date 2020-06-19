@@ -1,6 +1,6 @@
 # My Name Necklance
 
-This project was made as a part of the recruitment process to Tenengroup.
+This project was made as a part of the recruitment process to TenenGroup.
 
 The page is also available [here](https://laszland.github.io/fed-test-2020/).
 
