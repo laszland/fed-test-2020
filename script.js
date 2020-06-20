@@ -1,6 +1,10 @@
 let products = [];
 const url = new URL(window.location.href);
 const $ = window.$;
+const filters = {
+  sort: [{option: 'Sort By', key: ''}, {option: 'Price Hight To Low', key: 'desc'}, {option: 'Proce Low to High', key: 'asc'}],
+  filter: [{option: 'Filters', key: ''}, {option: 'Gold', key: 'gold'}, {option: 'Silver', key: 'silver'}]
+}
 
 function renderProducts (products) {
   const productCounter = products.length;
@@ -21,6 +25,30 @@ function renderProducts (products) {
     `);
   });
   $('.filters > p').html(productCounter + ' Results');
+}
+
+function renderFilters (filters) {
+  const sort = $('.filters .sort .select');
+  const filter = $('.filters .filter .select');
+  filters.sort.map(item => {
+    sort.append(`
+      <li>
+        <div key=${item.key}>
+          <p>${item.option}</p>
+        </div>
+      </li>
+    `)
+  });
+  filters.filter.map(item => {
+    filter.append(`
+      <li>
+        <div key=${item.key}>
+          <p>${item.option}</p>
+        </div>
+      </li>
+    `)
+  })
+
 }
 
 function filterProducts (products, filter) {
@@ -100,6 +128,7 @@ function handleSelectProduct (productID, event) {
 
 $(document).ready(function () {
   initProducts();
+  renderFilters(filters);
   initFilters();
 
   $('.toggleDisplay p').click(function () {
