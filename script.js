@@ -2,7 +2,7 @@ let products = [];
 const url = new URL(window.location.href);
 const $ = window.$;
 const filters = {
-  sort: [{ option: 'Sort By', key: '' }, { option: 'Price Hight To Low', key: 'desc' }, { option: 'Proce Low to High', key: 'asc' }],
+  sort: [{ option: 'Sort By', key: '' }, { option: 'Price High To Low', key: 'desc' }, { option: 'Price Low to High', key: 'asc' }],
   filter: [{ option: 'Filters', key: '' }, { option: 'Gold', key: 'gold' }, { option: 'Silver', key: 'silver' }]
 };
 
