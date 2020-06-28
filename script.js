@@ -96,7 +96,8 @@ function compare (order) {
 function toggleDisplay () {
   $('article').toggleClass('oneItem');
   const buttonText = $('article').hasClass('oneItem') ? 'Two item in a row' : 'One item in a row';
-  $(this).html(buttonText);
+  console.log(buttonText);
+  $('.toggleDisplay p').html(buttonText);
 }
 
 function handleSelectDropDown (filter, value, current) {
